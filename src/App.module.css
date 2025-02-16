@@ -1,0 +1,13 @@
+.wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  margin-top: 40px;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #1d1d1d;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
