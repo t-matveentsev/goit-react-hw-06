@@ -3,13 +3,19 @@
   flex-direction: column;
   gap: 6px;
 
-  width: 213px;
+  width: 300px;
   background-color: white;
   border: 1px solid white;
   border-radius: 5px;
   box-shadow: 0 0 3px #bea69e;
   padding: 10px;
   color: #121212;
+}
+
+@media only screen and (min-width: 1000px) {
+  .item {
+    width: 295px;
+  }
 }
 
 .itemBtn {

@@ -1,12 +1,16 @@
 .wrapper {
-  max-width: 1000px;
+  max-width: 300px;
   margin: 0 auto;
   margin-top: 40px;
   padding: 20px;
   border-radius: 8px;
   background-color: #1d1d1d;
 }
-
+@media only screen and (min-width: 1000px) {
+  .wrapper {
+    max-width: 1000px;
+  }
+}
 h1 {
   text-align: center;
   margin-bottom: 20px;

@@ -1,6 +1,17 @@
 .searchInput {
-  width: 97.9%;
+  width: 300px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+@media only screen and (min-width: 1000px) {
+  .searchInput {
+    width: 1000px;
+  }
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
 }

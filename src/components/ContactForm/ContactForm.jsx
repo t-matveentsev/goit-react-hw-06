@@ -1,36 +1,46 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import * as Yup from "yup";
-import onlyLetters from "../../helpers/validation-name";
-import onlyPhone from "../../helpers/validation-phone";
 import s from "./ContactForm.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { applySchema } from "../../helpers/schema";
+import { addContact } from "../../redux/contactsSlice/contactSlice";
 
-const ContactForm = ({ handleAdd }) => {
+const ContactForm = () => {
+  const contacts = useSelector((state) => state.contacts.contact);
+
+  const dispatch = useDispatch();
   const initialValues = {
     name: "",
     number: "",
   };
 
-  const applySchema = Yup.object().shape({
-    name: Yup.string()
-      .required("required")
-      .matches(onlyLetters, "The name cannot contain numbers!")
-      .min(3, "The name must be longer than 3 symbols!")
-      .max(50, "Maximum 50 symbols"),
-    number: Yup.string()
-      .required("required")
-      .matches(
-        onlyPhone,
-        "Please enter your phone number in the format 000-00-00 or 000-000-000"
-      )
-      .min(8, "The phone number must be longer than 8 symbols!")
-      .max(11, "Maximum 11 symbols"),
-  });
+  const onSubmit = (values, options, action) => {
+    const newContact = {
+      id: crypto.randomUUID(),
+      name: values.name,
+      number: values.number,
+    };
+    const contactInclude = contacts.some(
+      (contact) =>
+        contact.name.toLowerCase() === values.name.toLowerCase() ||
+        contact.number === values.number
+    );
+
+    if (contactInclude) {
+      alert(
+        "A contact with that name or phone number already exists! Use the search!"
+      );
+      action.setSubmitting(false);
+      return;
+    }
+    dispatch(addContact(newContact));
+    options.resetForm();
+  };
 
   return (
     <div>
       <Formik
         initialValues={initialValues}
-        onSubmit={handleAdd}
+        onSubmit={onSubmit}
         validationSchema={applySchema}
       >
         <Form>

@@ -1,25 +1,23 @@
+import { useSelector } from "react-redux";
 import Contact from "../Contact/Contact";
 import s from "./ContactList.module.css";
 
-const ContactList = ({ setContact, filteredContacts, isEmpty }) => {
-  // const handleDelete = (id) => {
-  //   const newContactList = filteredContacts.filter((item) => item.id != id);
-  //   setContact(newContactList);
-  // };
-  const handleDelete = (contactId) => {
-    setContact((prev) => {
-      return prev.filter((item) => item.id !== contactId);
-    });
-  };
+const ContactList = () => {
+  const contacts = useSelector((state) => state.contacts.contact);
+  const filter = useSelector((state) => state.filter.filter);
 
+  const filterData = contacts.filter((item) =>
+    item.name.toLowerCase().includes(filter.toLowerCase())
+  );
   return (
     <div>
-      <ul className={s.wrapper}>
-        {filteredContacts.map((item) => (
-          <Contact key={item.id} {...item} handleDelete={handleDelete} />
-        ))}
-      </ul>
-      {isEmpty && (
+      {filterData.length > 0 ? (
+        <ul className={s.wrapper}>
+          {filterData.map((item) => (
+            <Contact key={item.id} {...item} />
+          ))}
+        </ul>
+      ) : (
         <p className={s.info}>
           Oops, it seems you don&apos;t have any contacts yet, add them in the
           field above!
